@@ -1,0 +1,25 @@
+<component name="ArtifactManager">
+  <artifact type="javafx" build-on-make="true" name="BukerBet">
+    <output-path>$PROJECT_DIR$/out/artifacts/BukerBet</output-path>
+    <properties id="javafx-properties">
+      <options>
+        <option name="appClass" value="application.Main" />
+        <option name="description" value="" />
+        <option name="htmlParamFile" value="" />
+        <option name="paramFile" value="" />
+        <option name="title" value="Title" />
+        <option name="vendor" value="" />
+      </options>
+    </properties>
+    <root id="root">
+      <element id="archive" name="BukerBet.jar">
+        <element id="module-output" name="BuckerBetClient" />
+        <element id="directory" name="META-INF">
+          <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
+        </element>
+        <element id="file-copy" path="$PROJECT_DIR$/../BuckerBet/lib/json-simple-1.1.1.jar" />
+        <element id="file-copy" path="$PROJECT_DIR$/lib/log4j-1.2.14.jar" />
+      </element>
+    </root>
+  </artifact>
+</component>

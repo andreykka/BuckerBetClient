@@ -1,0 +1,24 @@
+<component name="ArtifactManager">
+  <artifact type="javafx" name="BuckerBetClient">
+    <output-path>$PROJECT_DIR$/out/artifacts/BuckerBetClient</output-path>
+    <properties id="javafx-properties">
+      <options>
+        <option name="appClass" value="application.Main" />
+        <option name="description" value="" />
+        <option name="htmlParamFile" value="" />
+        <option name="paramFile" value="" />
+        <option name="title" value="BukerBet" />
+        <option name="vendor" value="" />
+      </options>
+    </properties>
+    <root id="root">
+      <element id="archive" name="BuckerBetClient.jar">
+        <element id="directory" name="META-INF">
+          <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
+        </element>
+        <element id="module-output" name="BuckerBetClient" />
+        <element id="library" level="application" name="BuckerBetClientModule" />
+      </element>
+    </root>
+  </artifact>
+</component>
