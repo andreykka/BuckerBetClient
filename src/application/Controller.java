@@ -1,7 +1,8 @@
 package application;
 
+import connection.PortListener;
 import connection.ServerConnection;
-import javafx.application.Application;
+import connection.ServerConnectionService;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -10,6 +11,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import listeners.DataListener;
 import pojo.DateConverter;
 import pojo.OutputData;
 import pojo.RegistrationData;
@@ -24,6 +26,15 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Controller implements Initializable {
+
+    private class DataListenerImpl implements DataListener{
+
+        @Override
+        public void dataObtained(List<OutputData> data) {
+            tableView.getItems().clear();
+            tableView.getItems().addAll(data);
+        }
+    }
 
     // окно главной программы
     public static Stage stage;
@@ -83,17 +94,15 @@ public class Controller implements Initializable {
     private Pattern namePat = Pattern.compile("^[а-яА-ЯёЁіІїЇa-zA-Z]{0,25}$");
     private Pattern mailPat = Pattern.compile("^[-\\w.]+@([A-z0-9][-A-z0-9]+\\.)+[A-z]{2,4}$");
     private Pattern loginPat = Pattern.compile("^[a-zA-Z][a-zA-Z0-9-_\\.]{0,20}$");
-    //jprivate Pattern passPat = Pattern.compile("(?=^.{6,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$");
+    //private Pattern passPat = Pattern.compile("(?=^.{6,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$");
 
     private Matcher matcher;
 
-    private ServerConnection connection ;
+    private ServerConnectionService connectionService = ServerConnectionService.getInstance();
 
     private boolean isFilledLoginData(){
         return !(loginField.getText().isEmpty() || passwordField.getText().isEmpty());
     }
-
-
 
     private boolean isFilledRegisterData(){
         return !(
@@ -145,6 +154,8 @@ public class Controller implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        PortListener.addListener(new DataListenerImpl());
+
         this.eventCol.setCellValueFactory(new PropertyValueFactory<>("event"));
         this.dateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
         this.timeCol.setCellValueFactory(new PropertyValueFactory<>("time"));
@@ -159,6 +170,7 @@ public class Controller implements Initializable {
             this.passwordField.clear();
             this.showRegistration();
         });
+
         showLoginPaneLabel.setOnMouseClicked(action -> {
             this.regUserNameField.clear();
             this.regUserSurnameField.clear();
@@ -169,11 +181,15 @@ public class Controller implements Initializable {
             this.showLogin();
         });
 
-        this.refreshMenuItem.setOnAction(action -> getDataFromServer());
-
+//        this.refreshMenu.setOnMenuValidation(event -> getDataFromServer() );
         this.refreshMenu.setOnAction(action -> getDataFromServer());
 
-        this.exitMenuItem.setOnAction(action -> stage.close());
+        this.refreshMenuItem.setOnAction(action -> getDataFromServer());
+        this.exitMenuItem.setOnAction(action -> {
+            ServerConnectionService.getInstance().stopConnection();
+            stage.close();
+
+        });
 
         this.regUserTelField.setOnKeyReleased(event ->{
             if (this.regUserTelField.getText().length() > 14 ){
@@ -234,7 +250,7 @@ public class Controller implements Initializable {
                 return;
             }
 
-            Boolean isRegister = connection.login(this.loginField.getText(), this.passwordField.getText());
+            Boolean isRegister = connectionService.login(this.loginField.getText(), this.passwordField.getText());
             if (isRegister == null || (isRegister != null  && !isRegister)){
                /* JOptionPane.showMessageDialog(null, "Введены не верные даные\r\nПовторите попытку!!!");
                 System.out.println("user is not registred");*/
@@ -258,18 +274,17 @@ public class Controller implements Initializable {
             user.setLogin(regUserLoginField.getText());
             user.setPassword(regUserPasswordField.getText());
 
-            Boolean result = this.connection.registerUser(user);
+            Boolean result = this.connectionService.registerUser(user);
             if (result != null && result ) {
                 this.showLogin();
             }
         });
 
-        connection = ServerConnection.getInstance();
     }
 
     private void getDataFromServer(){
         this.tableView.getItems().clear();
-        List<OutputData> arr = connection.getContentData();
+        List<OutputData> arr = connectionService.getContentData();
         System.out.println("array size: " + arr.size());
         this.tableView.getItems().addAll(arr);
     }

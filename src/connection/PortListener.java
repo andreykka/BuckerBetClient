@@ -1,112 +1,151 @@
-/*
 package connection;
 
+import listeners.DataListener;
+import org.apache.log4j.Logger;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import pojo.FlagsEnum;
 import pojo.OutputData;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-*/
-/**
- * Created by gandy on 15.10.14.
- *
- *//*
+public class PortListener implements Runnable {
 
+    private final Logger logger = Logger.getLogger(getClass());
+    private static List<DataListener> listeners = new ArrayList<>(3);
 
-public class PortListener extends  Thread{
-
-    private ObjectInputStream in;
+    private Socket              socket;
+    private ObjectInputStream   in;
+    private ObjectOutputStream  out;
 
     private boolean isListening;
 
-    private List<OutputData> arr;
+    public PortListener(Socket socket) {
+        this.socket = socket;
+        try {
+            this.out = new ObjectOutputStream(socket.getOutputStream());
+            this.in = new ObjectInputStream(socket.getInputStream());
+        } catch (IOException e) {
+            logger.error(e);
+        }
 
-    public PortListener(ObjectInputStream in) {
-        super("PortListener Thread");
-        this.in = in;
         this.isListening = true;
+    }
 
-        this.start();
+    public void dataObtained(){
+        try {
+            JSONParser parser = new JSONParser();
+            JSONObject obj = null;
+            String json;
+
+            logger.info("read object from server");
+
+            if (in != null) {
+                json = in.readUTF();
+            } else {
+                logger.info("input stream = null");
+                this.stopListen();
+                return;
+            }
+
+            System.out.println(json);
+            try {
+                obj =  (JSONObject) parser.parse(json);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            List<OutputData> arr = new ArrayList<>();
+            OutputData data;
+            int i=0;
+            while (true){
+                JSONObject objectData = (JSONObject) obj.get(Integer.toString(i));
+
+                if (objectData == null ){
+                    logger.info("objectData == null");
+                    break;
+                }
+
+                data = new OutputData();
+                data.setDate((LocalDate.parse((String)objectData.get("date"))));
+                data.setResult((String) objectData.get("result"));
+                data.setEvent(((String) objectData.get("event")));
+                data.setTime((String)objectData.get("time"));
+
+                arr.add(data);
+                ++i;
+            }
+            for(DataListener dl: listeners) {
+                dl.dataObtained(arr);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override
     public void run() {
-        super.run();
-        try {
-            sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        while(isListening){
+        while(isListening) try {
 
-            try {
+            Object object = in.readObject();
 
-                JSONParser parser = new JSONParser();
-                JSONObject obj = null;
-                String json;
-                System.out.println("read object from server");
-                Log.write("read object from server");
+            if (!(object instanceof FlagsEnum)) {
+                logger.info("object is not a FlagsEnum object");
 
-                if (in != null) {
-                    json = in.readUTF();
-                } else {
-                    System.out.println("input stream = null");
-                    Log.write("input stream = null");
-                    this.interrupt();
-                    return;
-                }
-
-                System.out.println(json);
-                try {
-                    obj =  (JSONObject) parser.parse(json);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-
-                arr = new ArrayList<>();
-                OutputData data;
-                int i=0;
-                while (true){
-                    JSONObject objectData = (JSONObject) obj.get(Integer.toString(i));
-
-                    if (objectData == null ){
-                        System.out.println("objectData == null");
-                        Log.write("objectData == null");
-                        break;
-                    }
-
-                    data = new OutputData();
-                    data.setDate((LocalDate.parse((String)objectData.get("date"))));
-                    data.setResult((String) objectData.get("result"));
-                    data.setEvent(((String) objectData.get("event")));
-                    data.setTime((String)objectData.get("time"));
-
-                    arr.add(data);
-                    ++i;
-                }
-                //Controller.getInstance().setServerMessage(arr);
-                //Controller.getFromServer(arr);
-            } catch (IOException e) {
-                e.printStackTrace();
-                Log.write(e);
             }
 
+            FlagsEnum task = FlagsEnum.valueOf(((FlagsEnum) object).name());
+            logger.info("read " + task.name() + "  from server");
+
+            switch (task) {
+                case GET_DATA:  { dataObtained();   break;  }
+                case CHECK_CONNECTION:   { checkConnection();   break;  }
+            }
+
+        } catch (IOException | ClassNotFoundException e) {
+            logger.error(e);
         }
-
     }
 
+    private void checkConnection() {
+        if (out == null)
+            return;
+        try {
+            out.writeObject(Boolean.TRUE);
+        } catch (IOException e) {
+            logger.error(e);
+        }
+    }
 
-    @Override
-    public void interrupt() {
-        super.interrupt();
+    public void stopListen() {
         this.isListening = false;
+        try {
+            if (this.in != null)
+                this.in.close();
+            if (this.out != null)
+                this.out.close();
+            if (this.socket != null)
+                this.socket.close();
+        } catch (IOException e) {
+            logger.error(e);
+        }
     }
+
+    public static void addListener(DataListener listener) {
+        listeners.add(listener);
+    }
+
+    public static void removeListener(DataListener listener) {
+        listeners.remove(listener);
+    }
+
 }
 
-*/
