@@ -1,16 +1,11 @@
 package connection;
 
-import application.Main;
 import org.apache.log4j.Logger;
 import pojo.OutputData;
 import pojo.RegistrationData;
 
 import javax.swing.*;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
-import java.security.Signature;
 import java.util.List;
 import java.util.concurrent.*;
 
@@ -40,29 +35,7 @@ public class ServerConnectionService {
             logger.error(e);
         }
 
-        Future<?> portListenerFuture = executorService.submit(portListener);
-       /* try {
-            // wait before port listener started
-            portListenerFuture.get();
-        } catch (InterruptedException | ExecutionException e) {
-            logger.error(e);
-        }*/
-
-    /*    try {
-            Socket socket  = SocketOpener.openNewSocket();
-            Socket socket2  = SocketOpener.openNewSocket();
-
-            ObjectOutputStream out     = new ObjectOutputStream(socket.getOutputStream());
-            ObjectInputStream in      = new ObjectInputStream(socket.getInputStream());
-
-            ObjectOutputStream out2     = new ObjectOutputStream(socket2.getOutputStream());
-            ObjectInputStream in2      = new ObjectInputStream(socket2.getInputStream());
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-*/
-
+        executorService.submit(portListener);
 
         executorService.shutdown();
         logger.info("Connection success");
@@ -71,9 +44,6 @@ public class ServerConnectionService {
     public void stopConnection() {
         portListener.stopListen();
         connection.closeConnection();
-
-
-
     }
 
     public Boolean login (String login, String password) throws NullPointerException {
@@ -87,6 +57,5 @@ public class ServerConnectionService {
     public List<OutputData> getContentData(){
         return connection.getContentData();
     }
-
 
 }

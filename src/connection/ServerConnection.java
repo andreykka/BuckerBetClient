@@ -88,7 +88,6 @@ public class ServerConnection {
                 JOptionPane.showMessageDialog(null, message);
                 return false;
             }
-
             return true;
         } catch (IOException e) {
             LOGGER.error(e);
@@ -98,6 +97,13 @@ public class ServerConnection {
 
     public Boolean registerUser(RegistrationData regData){
         LOGGER.info("start registerUser function");
+        try {
+            if (this.in == null)
+                this.in = new ObjectInputStream(socket.getInputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         if (!isActive()) {
             JOptionPane.showMessageDialog(null, "Нет соединения с сервером");
             return null;
