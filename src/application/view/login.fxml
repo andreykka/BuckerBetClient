@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="pane" prefHeight="409.0" prefWidth="528.0" stylesheets="@clientStyle.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.LoginController">
+   <children>
+       <Text id="bigText" fill="#000000ba" layoutX="153.0" layoutY="109.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Авторизация">
+           <effect>
+             <Blend mode="MULTIPLY" opacity="0.0" />
+           </effect>
+           <font>
+             <Font name="Serif Regular" size="34.0" />
+           </font>
+       </Text>
+       <Text id="textId" fill="#000000ba" layoutX="64.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Логин:">
+           <font>
+             <Font name="Serif Bold" size="19.0" />
+           </font>
+       </Text>
+       <TextField fx:id="loginField" layoutX="152.0" layoutY="164.0" prefHeight="38.0" prefWidth="296.0" promptText="Введите логин">
+           <font>
+             <Font size="16.0" />
+           </font>
+       </TextField>
+       <Text id="textId" fill="#000000ba" layoutX="50.0" layoutY="247.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Пароль:">
+           <font>
+             <Font name="Serif Bold" size="19.0" />
+           </font>
+       </Text>
+       <PasswordField fx:id="passwordField" layoutX="151.0" layoutY="222.0" prefHeight="38.0" prefWidth="296.0" promptText="Введите пароль">
+           <font>
+             <Font size="16.0" />
+           </font>
+       </PasswordField>
+       <Button id="defBut" fx:id="loginBtn" defaultButton="true" layoutX="285.0" layoutY="309.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="162.0" text="Войти">
+           <font>
+             <Font size="15.0" />
+           </font>
+       </Button>
+       <Button fx:id="showRegisterBtn" layoutX="149.0" layoutY="309.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="118.0" text="Регистрация">
+           <font>
+             <Font size="15.0" />
+           </font>
+       </Button>
+   </children>
+</AnchorPane>

@@ -1,14 +1,16 @@
-#loginPane {
-    -fx-padding: 0;
-    -fx-background-image: url("../resources/background.jpg");
+*{
+    -fx-font-family: "serif";
+    -fx-font-size: 14px;
 }
 
-#registerPane{
-    -fx-background-image: url("../resources/background.jpg");
+#pane {
+    -fx-padding: 0;
+    -fx-background-image: url("../../resources/background.jpg");
 }
+
 
 #showRegisterPaneLabel, #showLoginPaneLabel {
-    -fx-font-size: 18px;
+    -fx-font-size: 17px;
     -fx-font-weight: bold;
 
     -fx-effect: dropshadow( gaussian , rgba(255,255,255,0.5) , 0,0,0,1 );
@@ -26,19 +28,19 @@
 }
 
 .lastMath{
-    -fx-background-color: rgba(255, 100,52,0.7);
+    -fx-background-color: rgba(255, 91, 82, 0.70);
 }
 
-.todayMatch{
-    -fx-background-color: rgba(178, 1,52,0.3);
+.lastMath:selected {
+    -fx-background-color: rgba(136, 27, 21, 0.70);
 }
 
+.todayMatch {
+    -fx-background-color: rgba(152, 238, 162, 0.69);
+ }
 
-#showLoginPaneLabel:hover, #showRegisterPaneLabel:hover {
-    -fx-fill: FIREBRICK;
-    -fx-font-weight: bold;
-    -fx-underline: true;
-    -fx-cursor: hand;
+.todayMatch:selected {
+    -fx-background-color: rgba(46, 120, 48, 0.71);
 }
 
 
@@ -58,14 +60,16 @@
 
 }
 
-.button {
+#defBut {
     -fx-text-fill: white;
-    -fx-font-family: "Arial Narrow";
+    -fx-font-size: 13px;
+    /*-fx-font-family: "Times New Roman";*/
     -fx-font-weight: bold;
     -fx-background-color: linear-gradient(#61a2b1, #2A5058);
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
 }
 
-.button:hover {
+#defBut:hover {
+    -fx-font-size: 13px;
     -fx-background-color: linear-gradient(#2A5058, #61a2b1);
 }

@@ -1,6 +1,9 @@
 package connection;
 
+import application.Main;
 import config.Config;
+import javafx.scene.control.Alert;
+import javafx.stage.Modality;
 import org.apache.log4j.Logger;
 import org.json.simple.JSONObject;
 import pojo.FlagsEnum;
@@ -13,8 +16,6 @@ import java.time.LocalDate;
 import java.util.*;
 import org.json.simple.parser.*;
 import pojo.RegistrationData;
-
-import javax.swing.*;
 
 /**
  * Created by gandy on 26.09.14.
@@ -40,6 +41,8 @@ public class ServerConnection {
     }
 
     private boolean isActive(){
+        if (!ServerConnectionService.isSuccessConnection())
+            return false;
         if (socket != null && !socket.isClosed()){
             return true;
         }
@@ -67,7 +70,11 @@ public class ServerConnection {
 
         LogInData data = new LogInData(login, password, Config.getMac());
         if (!isActive()) {
-            JOptionPane.showMessageDialog(null, "Нет соединения с сервером");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Внимание");
+            alert.setHeaderText(null);
+            alert.setContentText("Нет соединения с сервером !!!");
+            alert.showAndWait();
             return null;
         }
 
@@ -82,17 +89,21 @@ public class ServerConnection {
 
             LOGGER.info("try to read request ...");
             Boolean result = in.readBoolean();
-
-            if (result != null && !result) {
+            LOGGER.info("READ BOOLEAN");
+            if (!result) {
                 String message = in.readUTF();
-                JOptionPane.showMessageDialog(null, message);
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Информационное сообщение");
+                alert.setHeaderText(null);
+                alert.setContentText(message);
+                alert.showAndWait();
                 return false;
             }
             return true;
         } catch (IOException e) {
             LOGGER.error(e);
+            throw new NullPointerException();
         }
-        return false;
     }
 
     public Boolean registerUser(RegistrationData regData){
@@ -105,7 +116,11 @@ public class ServerConnection {
         }
 
         if (!isActive()) {
-            JOptionPane.showMessageDialog(null, "Нет соединения с сервером");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Внимание");
+            alert.setHeaderText(null);
+            alert.setContentText("Нет соединения с сервером !!!");
+            alert.showAndWait();
             return null;
         }
 
@@ -137,14 +152,26 @@ public class ServerConnection {
 
             LOGGER.info(message);
 
-            JOptionPane.showMessageDialog(null, message, "Ошибка",JOptionPane.WARNING_MESSAGE);
-
+            if (result) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Поздравляем");
+                alert.setHeaderText(null);
+                alert.setContentText(message);
+                alert.showAndWait();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Внимание");
+                alert.setHeaderText("Невозможно зарегистрироваться");
+                alert.setContentText(message);
+                alert.showAndWait();
+            }
             return  result;
 
         } catch (IOException e) {
             LOGGER.error(e);
+            throw new NullPointerException();
+
         }
-        return false;
     }
 
     /**
@@ -193,6 +220,7 @@ public class ServerConnection {
 
         } catch (IOException | ParseException e){
             LOGGER.error(e);
+            throw new NullPointerException();
         }
         return arr;
     }

@@ -1,10 +1,12 @@
 package connection;
 
+import application.Main;
+import javafx.scene.control.Alert;
+import javafx.stage.Modality;
 import org.apache.log4j.Logger;
 import pojo.OutputData;
 import pojo.RegistrationData;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.*;
@@ -14,6 +16,8 @@ import java.util.concurrent.*;
  *
  */
 public class ServerConnectionService {
+
+    public static boolean successConnection = false;
 
     private static ServerConnectionService instance = new ServerConnectionService();
     public  static ServerConnectionService getInstance(){ return  instance;}
@@ -31,19 +35,31 @@ public class ServerConnectionService {
             portListener = new PortListener(SocketOpener.openNewSocket());
 
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Не удалось соединиться с сервером", "Connection Error", JOptionPane.ERROR_MESSAGE);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Ошыбка соединения с сервером");
+            alert.initModality(Modality.WINDOW_MODAL);
+            alert.initOwner(Main.stage);
+            alert.setHeaderText(null);
+
+            alert.setContentText("Не удалось соединиться с сервером.\r\nПопробуйте позже.");
+            alert.showAndWait();
             logger.error(e);
+            successConnection = false;
+            return;
         }
 
         executorService.submit(portListener);
 
         executorService.shutdown();
         logger.info("Connection success");
+        successConnection = true;
     }
 
     public void stopConnection() {
-        portListener.stopListen();
-        connection.closeConnection();
+        if (portListener != null)
+            portListener.stopListen();
+        if (connection != null)
+            connection.closeConnection();
     }
 
     public Boolean login (String login, String password) throws NullPointerException {
@@ -58,4 +74,8 @@ public class ServerConnectionService {
         return connection.getContentData();
     }
 
+
+    public static boolean isSuccessConnection() {
+        return successConnection;
+    }
 }

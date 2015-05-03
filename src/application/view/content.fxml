@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="480.0" prefWidth="921.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ContentController">
+   <children>
+      <TableView id="table-view" fx:id="tableView" layoutX="10.0" layoutY="28.0" prefHeight="452.0" prefWidth="921.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="28.0">
+         <columns>
+            <TableColumn id="table-column" fx:id="eventCol" editable="false" prefWidth="345.0" sortable="false" text="Событие" />
+            <TableColumn id="table-column" fx:id="resultCol" editable="false" minWidth="0.0" prefWidth="345.0" sortable="false" text="Прогноз" />
+            <TableColumn id="table-column" fx:id="dateCol" editable="false" minWidth="0.0" prefWidth="140.0" sortable="false" text="Дата" />
+            <TableColumn id="table-column" fx:id="timeCol" editable="false" minWidth="0.0" prefWidth="70.0" sortable="false" text="Время" />
+         </columns>
+      </TableView>
+      <MenuBar prefHeight="29.0" prefWidth="921.0">
+         <menus>
+            <Menu mnemonicParsing="false" text="Файл">
+               <items>
+                  <MenuItem fx:id="refreshMenuItem" mnemonicParsing="false" text="Обновить информацию" />
+                  <MenuItem fx:id="exitMenuItem" mnemonicParsing="false" text="Выход" />
+               </items>
+            </Menu>
+            <Menu fx:id="refreshMenu" mnemonicParsing="false" text="Обновить" />
+         </menus>
+      </MenuBar>
+   </children>
+</AnchorPane>

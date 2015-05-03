@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="pane" prefHeight="457.0" prefWidth="541.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.RegistrationController">
+   <children>
+      <Text id="bigText" fill="#000000ba" layoutX="198.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Регистрация">
+         <effect>
+            <Blend mode="MULTIPLY" opacity="0.0" />
+         </effect>
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <Text id="textId" fill="#000000d1" layoutX="58.0" layoutY="104.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Фамилия:">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Text>
+      <TextField fx:id="regUserSurnameField" layoutX="162.0" layoutY="83.0" prefHeight="33.0" prefWidth="296.0" promptText="Введите фамилию">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </TextField>
+      <Text id="textId" fill="#000000d1" layoutX="102.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Имя:">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Text>
+      <TextField fx:id="regUserNameField" layoutX="162.0" layoutY="130.0" prefHeight="33.0" prefWidth="296.0" promptText="Введите имя">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </TextField>
+      <Text id="textId" fill="#000000d1" layoutX="60.0" layoutY="199.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Телефон:">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Text>
+      <TextField fx:id="regUserTelField" layoutX="163.0" layoutY="177.0" prefHeight="33.0" prefWidth="296.0" promptText="Введите номер телефона">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </TextField>
+      <Text id="textId" fill="#000000d1" layoutX="88.0" layoutY="244.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email:">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Text>
+      <TextField fx:id="regUserEmailField" layoutX="163.0" layoutY="223.0" prefHeight="33.0" prefWidth="296.0" promptText="Введите аддрес ел. почты">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </TextField>
+      <Text id="textId" fill="#000000d1" layoutX="83.0" layoutY="293.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Логин:">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Text>
+      <TextField fx:id="regUserLoginField" layoutX="164.0" layoutY="272.0" prefHeight="30.0" prefWidth="296.0" promptText="Введите логин">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </TextField>
+      <Text id="textId" fill="#000000d1" layoutX="73.0" layoutY="342.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Пароль:">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Text>
+      <PasswordField fx:id="regUserPasswordField" layoutX="164.0" layoutY="321.0" prefHeight="33.0" prefWidth="296.0" promptText="Введите пароль">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </PasswordField>
+      <Button id="defBut" fx:id="registerBtn" defaultButton="true" layoutX="235.0" layoutY="380.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="225.0" text="Зарегистрироваться">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+      <Button fx:id="showLoginBtn" layoutX="71.0" layoutY="380.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="124.0" text="Войти">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

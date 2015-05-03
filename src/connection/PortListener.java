@@ -112,6 +112,7 @@ public class PortListener implements Runnable {
 
         } catch (IOException | ClassNotFoundException e) {
             logger.error(e);
+            isListening = false;
         }
     }
 
