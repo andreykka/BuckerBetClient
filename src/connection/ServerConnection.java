@@ -1,9 +1,7 @@
 package connection;
 
-import application.Main;
 import config.Config;
 import javafx.scene.control.Alert;
-import javafx.stage.Modality;
 import org.apache.log4j.Logger;
 import org.json.simple.JSONObject;
 import pojo.FlagsEnum;

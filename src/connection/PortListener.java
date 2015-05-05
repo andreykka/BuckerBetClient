@@ -69,7 +69,7 @@ public class PortListener implements Runnable {
                 JSONObject objectData = (JSONObject) obj.get(Integer.toString(i));
 
                 if (objectData == null ){
-                    logger.info("objectData == null");
+//                    logger.info("objectData == null");
                     break;
                 }
 

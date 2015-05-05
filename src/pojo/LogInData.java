@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 /**
  * Created by gandy on 27.09.14.
+ *
  */
 public class LogInData implements Serializable {
 
@@ -11,7 +12,7 @@ public class LogInData implements Serializable {
     private String pass;
     private String mac;
 
-    public LogInData (LogInData obj){
+    public LogInData(LogInData obj){
         this.setLogin(obj.getLogin());
         this.setPass(obj.getPass());
         this.setMac(obj.getMac());

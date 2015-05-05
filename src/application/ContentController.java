@@ -36,7 +36,6 @@ public class ContentController implements Initializable {
 
     @FXML private MenuItem                        refreshMenuItem;
     @FXML private MenuItem                        exitMenuItem;
-    @FXML private Menu                            refreshMenu;
     @FXML private TableView<OutputData>           tableView;
     @FXML private TableColumn<Object, Object>     eventCol;
     @FXML private TableColumn<Object, LocalDate>  dateCol;
@@ -63,7 +62,6 @@ public class ContentController implements Initializable {
 
         this.tableView.getItems().clear();
 
-        this.refreshMenu.setOnAction(action -> getDataFromServer());
         this.refreshMenuItem.setOnAction(action -> getDataFromServer());
 
         this.tableView.setRowFactory(new Callback<TableView<OutputData>, TableRow<OutputData>>() {

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="350.0" style="-fx-background-color: radial-gradient(focus-distance 99% , center 80% 50% , radius 120% , #321620, #f3fff3);" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Text fx:id="timeText" layoutX="7.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3 мая 2015 21:45" textAlignment="RIGHT" textOrigin="BOTTOM" wrappingWidth="340.0">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+      </Text>
+      <Text fx:id="actionText" layoutX="7.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Бавария - ПортуЛига чемпионов, 1/4 финала (2-й поединок)" wrappingWidth="340.0">
+         <font>
+            <Font name="System Bold Italic" size="13.0" />
+         </font>
+         <fill>
+            <LinearGradient endX="0.5240384615384615" endY="0.5480769230769231" startX="0.5240384615384616" startY="0.985576923076923">
+               <stops>
+                  <Stop color="BLACK" />
+                  <Stop color="#833030" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </fill>
+      </Text>
+      <Text fx:id="tesultText" layoutX="6.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Прогноз: Голы в обоих таймах (1,5)Коэффициенты: победа Баварии – 1,32; ничья – 6,1;  победа Порту – 11,04" wrappingWidth="340.0">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+         <fill>
+            <LinearGradient cycleMethod="REFLECT" endX="1.0" endY="1.0">
+               <stops>
+                  <Stop color="#9e2a2a" />
+                  <Stop color="#9e2a2a" offset="0.007407407407407408" />
+                  <Stop color="#d95511" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </fill>
+      </Text>
+   </children>
+</AnchorPane>
